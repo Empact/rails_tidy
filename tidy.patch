@@ -1,0 +1,12 @@
+diff -ur old/tidy-1.1.2/lib/tidy/tidybuf.rb new/tidy-1.1.2/lib/tidy/tidybuf.rb
+--- old/tidy-1.1.2/lib/tidy/tidybuf.rb	2006-02-15 09:55:01.000000000 +0100
++++ new/tidy-1.1.2/lib/tidy/tidybuf.rb	2006-02-14 16:37:54.000000000 +0100
+@@ -30,7 +30,7 @@
+   # Convert to array.
+   #
+   def to_a
+-    to_s.split("\r\n")
++    to_s.split($/)
+   end
+ 
+   # Convert to string.

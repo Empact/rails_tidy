@@ -1,0 +1,115 @@
+= RailsTidy
+
+This plugin allows html validation of templates and the response body
+of functional tests.
+
+
+== 1. Requirements
+
+- tidylib: http://tidy.sourceforge.net
+- tidy for ruby: link:http://rubyforge.org/projects/tidy (gem install tidy)
+
+<em>WARNING:</em> there is a bug in tidy for ruby.
+
+The line separator is hard-encoded instead of using the <tt>$/</tt> magic
+variable, so it breaks on unix platforms. Apply the tidy.patch[link:files/tidy_patch.html]
+patch file to your tidy installation to work arround the bug. 
+
+To apply the patch, go into your tidy for ruby installation directory
+(mine is <tt>/usr/lib/ruby/gems/1.8/gems/tidy-1.1.2</tt>) and run 
+
+  $ patch -p 2   < /path/to/tidy.patch
+
+You maybe need to su as root for the patch to apply.
+
+
+== 2. Installation
+
+Unpack into the <tt>vendor/plugin</tt> and that should be it. Ruby bindings for
+libtidy need to know the path to the file <tt>libtidy.so</tt>. It is assumed
+to be found at <tt>/usr/lib/libtidy.so</tt> . If this is not the case, add 
+
+  RailsTidy.tidy_path = "/path/to/your/libtidy.so"
+
+to your environment file.
+
+
+== 3. Configuration
+
+If the file <tt>config/tidy.rc</tt> exists, it will use it to configure
+Tidy. If you want to use another file, put 
+
+RailsTidy.tidy_configuration = "/path/to/a/tidy/configuration/file" 
+
+to your environment file. See
+http://tidy.sourceforge.net/docs/quickref.html for tidy available
+configuration options.
+
+
+== 4. Usage
+
+
+=== 4.1 Validating templates
+
+Simply use 
+
+  $ rake test_templates
+
+By default, the plugin will parse all <tt>*.rhtml</tt> files in your app/views
+directory. For each files that does not validate, it will create a
+.errors file which will contain the error messages from tidy for that file.
+
+If you want to validate only one file, use
+
+  $ rake test_templates FILE="path/to/the/file"
+
+If $FILE is a directory, it will search for all <tt>*.rhtml</tt> file in it and
+try to validates them. If <tt>$FILE</tt> is a regular file it will be
+validated. If $FILE does not exists it will try with:
+
+- ".rhtml" appended to <tt>$FILE</tt>,
+- the app/view directory prepended to <tt>$FILE</tt>,
+- the app/view directory prepended and ".rhtml" appended to <tt>$FILE</tt>
+
+
+=== 4.2 Validating html output
+
+The plugin adds a new assert_tidy method to the <tt>Test::Unit::TestCase</tt>
+class. You can use it in your class by simply call it with no
+arguments. It will validate the last response returned by a test. For
+example:
+
+  get :index
+  assert_sucess
+  assert_tidy
+
+
+=== 4.3 Cleaning rails html output
+
+The plugin allows you to clean the html produced by rails. To enable
+it, use an after filter in your <tt>app/controller/application.rb</tt> file
+
+  class ApplicationController < ActionController::Base
+    after_filter :tidy
+    def tidy
+      RailsTidy.filter(response)
+    end	
+  end
+
+To configure tidy output, see "3. Configuration"
+
+<em>WARNING</em>: THIS IS CERTAINLY A RESOURCE HOG. I'm not interrested in this
+feature so I didn't benchmarked it but at first sight rendering is at
+least 2 times slower with the filter enabled.
+
+
+== 5. License
+
+This plugin is licensed under the MIT license. Complete license text
+is included in the MIT-LICENSE[link:files/MIT-LICENSE.html] file.
+
+== 6. Author
+
+This plugin was created by Damien Merenne <dam@cosinux.org> and is
+located at http://www.cosinux.org/blogs/dam/pages/rails-tidy.
+

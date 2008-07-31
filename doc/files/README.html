@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Thu Feb 16 12:59:01 CET 2006</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1><a href="../classes/RailsTidy.html">RailsTidy</a></h1>
+<p>
+This plugin allows html validation of templates and the response body of
+functional tests.
+</p>
+<h2>1. Requirements</h2>
+<ul>
+<li>tidylib: <a href="http://tidy.sourceforge.net">tidy.sourceforge.net</a>
+
+</li>
+<li>tidy for ruby: <a
+href="../http:/rubyforge.org/projects/tidy">http://rubyforge.org/projects/tidy</a>
+(gem install tidy)
+
+</li>
+</ul>
+<p>
+<em>WARNING:</em> there is a bug in tidy for ruby.
+</p>
+<p>
+The line separator is hard-encoded instead of using the <tt>$/</tt> magic
+variable, so it breaks on unix platforms. Apply the <a
+href="tidy_patch.html">tidy.patch</a> patch file to your tidy installation
+to work arround the bug.
+</p>
+<p>
+To apply the patch, go into your tidy for ruby installation directory (mine
+is <tt>/usr/lib/ruby/gems/1.8/gems/tidy-1.1.2</tt>) and run
+</p>
+<pre>
+  $ patch -p 2   &lt; /path/to/tidy.patch
+</pre>
+<p>
+You maybe need to su as root for the patch to apply.
+</p>
+<h2>2. Installation</h2>
+<p>
+Unpack into the <tt>vendor/plugin</tt> and that should be it. Ruby bindings
+for libtidy need to know the path to the file <tt>libtidy.so</tt>. It is
+assumed to be found at <tt>/usr/lib/libtidy.so</tt> . If this is not the
+case, add
+</p>
+<pre>
+  RailsTidy.tidy_path = &quot;/path/to/your/libtidy.so&quot;
+</pre>
+<p>
+to your environment file.
+</p>
+<h2>3. Configuration</h2>
+<p>
+If the file <tt>config/tidy.rc</tt> exists, it will use it to configure
+Tidy. If you want to use another file, put
+</p>
+<p>
+RailsTidy.tidy_configuration =
+&quot;/path/to/a/tidy/configuration/file&quot;
+</p>
+<p>
+to your environment file. See <a
+href="http://tidy.sourceforge.net/docs/quickref.html">tidy.sourceforge.net/docs/quickref.html</a>
+for tidy available configuration options.
+</p>
+<h2>4. Usage</h2>
+<h3>4.1 Validating templates</h3>
+<p>
+Simply use
+</p>
+<pre>
+  $ rake test_templates
+</pre>
+<p>
+By default, the plugin will parse all <tt>*.rhtml</tt> files in your
+app/views directory. For each files that does not validate, it will create
+a .errors file which will contain the error messages from tidy for that
+file.
+</p>
+<p>
+If you want to validate only one file, use
+</p>
+<pre>
+  $ rake test_templates FILE=&quot;path/to/the/file&quot;
+</pre>
+<p>
+If $FILE is a directory, it will search for all <tt>*.rhtml</tt> file in it
+and try to validates them. If <tt>$FILE</tt> is a regular file it will be
+validated. If $FILE does not exists it will try with:
+</p>
+<ul>
+<li>&quot;.rhtml&quot; appended to <tt>$FILE</tt>,
+
+</li>
+<li>the app/view directory prepended to <tt>$FILE</tt>,
+
+</li>
+<li>the app/view directory prepended and &quot;.rhtml&quot; appended to
+<tt>$FILE</tt>
+
+</li>
+</ul>
+<h3>4.2 Validating html output</h3>
+<p>
+The plugin adds a new assert_tidy method to the
+<tt>Test::Unit::TestCase</tt> class. You can use it in your class by simply
+call it with no arguments. It will validate the last response returned by a
+test. For example:
+</p>
+<pre>
+  get :index
+  assert_sucess
+  assert_tidy
+</pre>
+<h3>4.3 Cleaning rails html output</h3>
+<p>
+The plugin allows you to clean the html produced by rails. To enable it,
+use an after filter in your <tt>app/controller/application.rb</tt> file
+</p>
+<pre>
+  class ApplicationController &lt; ActionController::Base
+    after_filter :tidy
+    def tidy
+      RailsTidy.filter(response)
+    end
+  end
+</pre>
+<p>
+To configure tidy output, see &quot;3. Configuration&quot;
+</p>
+<p>
+<em>WARNING</em>: THIS IS CERTAINLY A RESOURCE HOG. I&#8217;m not
+interrested in this feature so I didn&#8217;t benchmarked it but at first
+sight rendering is at least 2 times slower with the filter enabled.
+</p>
+<h2>5. License</h2>
+<p>
+This plugin is licensed under the MIT license. Complete license text is
+included in the <a href="MIT-LICENSE.html">MIT-LICENSE</a> file.
+</p>
+<h2>6. Author</h2>
+<p>
+This plugin was created by Damien Merenne &lt;dam@cosinux.org&gt; and is
+located at <a
+href="http://www.cosinux.org/blogs/dam/pages/rails-tidy">www.cosinux.org/blogs/dam/pages/rails-tidy</a>.
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: RailsTidy</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">RailsTidy</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/rails_tidy_rb.html">
+                lib/rails_tidy.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1><a href="RailsTidy.html">RailsTidy</a></h1>
+<p>
+class use to validate html in templates and in http response
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000011">filter</a>&nbsp;&nbsp;
+      <a href="#M000010">format_content</a>&nbsp;&nbsp;
+      <a href="#M000009">log_errors</a>&nbsp;&nbsp;
+      <a href="#M000006">new</a>&nbsp;&nbsp;
+      <a href="#M000001">path=</a>&nbsp;&nbsp;
+      <a href="#M000005">run</a>&nbsp;&nbsp;
+      <a href="#M000004">tidy_configuration=</a>&nbsp;&nbsp;
+      <a href="#M000012">tidy_factory</a>&nbsp;&nbsp;
+      <a href="#M000003">tidy_path</a>&nbsp;&nbsp;
+      <a href="#M000002">tidy_path=</a>&nbsp;&nbsp;
+      <a href="#M000007">validate</a>&nbsp;&nbsp;
+      <a href="#M000008">validate_file</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">IGNORED</td>
+          <td>=</td>
+          <td class="context-item-value">[     /&lt;a&gt; escaping malformed URI reference/,     /attribute &quot;id&quot; has invalid value &quot;&lt;%=.*?%&gt;&quot;/,     /&lt;link&gt; escaping malformed URI reference/,     /&lt;div&gt; anchor &quot;&lt;%=.*?%&gt;&quot; already defined/</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MASK</td>
+          <td>=</td>
+          <td class="context-item-value">/\.rhtml$/</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+          <a href="#M000011" class="method-signature">
+          <span class="method-name">filter</span><span class="method-args">(response)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+filter the body of a response
+</p>
+<p>
+use this method in an after_filter. Example:
+</p>
+<pre>
+  after_filter :tidy
+  def tidy
+    RailsTidy.filter(response)
+  end
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000011-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000011-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 160</span>
+160:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">filter</span>(<span class="ruby-identifier">response</span>)
+161:     <span class="ruby-identifier">tidy</span> = <span class="ruby-identifier">tidy_factory</span>
+162:     <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">clean</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)
+163:     <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">error</span><span class="ruby-operator">|</span> <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;Tidy: #{error}&quot;</span>) }
+164:     <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">release</span>
+165:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="#M000006" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000006-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 62</span>
+62:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+63:     <span class="ruby-ivar">@tidy</span> = <span class="ruby-constant">RailsTidy</span>.<span class="ruby-identifier">tidy_factory</span>
+64:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="#M000001" class="method-signature">
+          <span class="method-name">path=</span><span class="method-args">(path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+path of the file or directory to validate
+</p>
+<p>
+if path is a file, it will be validated using tidy, if it is a directory,
+it will search it for .rhtml file and validate all those files.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000001-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000001-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 37</span>
+37:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">path=</span>(<span class="ruby-identifier">path</span>)
+38:     <span class="ruby-ivar">@@path</span> = <span class="ruby-identifier">path</span>
+39:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="#M000005" class="method-signature">
+          <span class="method-name">run</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+validate templates in path
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000005-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 57</span>
+57:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">run</span>
+58:     <span class="ruby-identifier">td</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new</span>
+59:     <span class="ruby-identifier">td</span>.<span class="ruby-identifier">validate</span>
+60:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="#M000004" class="method-signature">
+          <span class="method-name">tidy_configuration=</span><span class="method-args">(tidy_configuration)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+path to tidy configuration file, set to config/tidy.rc by default
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000004-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 52</span>
+52:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tidy_configuration=</span>(<span class="ruby-identifier">tidy_configuration</span>)
+53:     <span class="ruby-ivar">@@tidy_configuration</span> = <span class="ruby-identifier">tidy_configuration</span>
+54:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+          <a href="#M000012" class="method-signature">
+          <span class="method-name">tidy_factory</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+return a new tidy instance
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000012-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 168</span>
+168:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tidy_factory</span>
+169:     <span class="ruby-constant">Tidy</span>.<span class="ruby-identifier">path</span> = <span class="ruby-ivar">@@tidy_path</span>
+170:     <span class="ruby-identifier">tidy</span> = <span class="ruby-constant">Tidy</span>.<span class="ruby-identifier">new</span>
+171:     <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">load_config</span>(<span class="ruby-ivar">@@tidy_configuration</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-ivar">@@tidy_configuration</span>)
+172:     <span class="ruby-identifier">tidy</span>
+173:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="#M000003" class="method-signature">
+          <span class="method-name">tidy_path</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000003-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 46</span>
+46:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tidy_path</span>
+47:     <span class="ruby-ivar">@@tidy_path</span>
+48:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="#M000002" class="method-signature">
+          <span class="method-name">tidy_path=</span><span class="method-args">(tidy_path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+path to the tidy library
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000002-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 42</span>
+42:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tidy_path=</span>(<span class="ruby-identifier">tidy_path</span>)
+43:     <span class="ruby-ivar">@@tidy_path</span> = <span class="ruby-identifier">tidy_path</span>
+44:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="#M000010" class="method-signature">
+          <span class="method-name">format_content</span><span class="method-args">(content)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+format the response
+</p>
+<p>
+this method add doctype and missing tag so that when a a templates miss
+doctypes or html tag, tidy does not complain
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000010-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 129</span>
+129:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">format_content</span>(<span class="ruby-identifier">content</span>)
+130:     <span class="ruby-comment cmt"># add doctype if not found</span>
+131:     <span class="ruby-identifier">validable</span> = <span class="ruby-value str">&quot;&quot;</span>
+132:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">content</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/&lt;!DOCTYPE/</span>)
+133:       <span class="ruby-identifier">validable</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;!DOCTYPE html PUBLIC \&quot;-//W3C//DTD XHTML 1.0 Transitional//EN\&quot; &quot;</span> <span class="ruby-operator">+</span>
+134:         <span class="ruby-value str">&quot; \&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\&quot;&gt;&quot;</span>
+135:     <span class="ruby-keyword kw">end</span>
+136: 
+137:     <span class="ruby-comment cmt"># add html, head, title and body </span>
+138:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">content</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/&lt;html/</span>)
+139:       <span class="ruby-identifier">validable</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;rake test_templates&lt;/title&gt;&lt;/head&gt;&lt;body&gt;#{content}&lt;/body&gt;&lt;/html&gt;&quot;</span>
+140:     <span class="ruby-keyword kw">else</span>
+141:       <span class="ruby-identifier">validable</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">content</span>
+142:     <span class="ruby-keyword kw">end</span>
+143: 
+144:     <span class="ruby-comment cmt"># replace start_form_tag and end_form_tag with &lt;form&gt; and &lt;/form&gt;</span>
+145:     <span class="ruby-identifier">validable</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/&lt;%=\s*start_form_tag.*?%&gt;/</span>, <span class="ruby-value str">&quot;&lt;form action=\&quot;test\&quot;&gt;&quot;</span>)
+146:     <span class="ruby-identifier">validable</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/&lt;%=\s*form_remote_tag.*?%&gt;/</span>, <span class="ruby-value str">&quot;&lt;form action=\&quot;test\&quot;&gt;&quot;</span>)
+147:     <span class="ruby-identifier">validable</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/&lt;%=\s*end_form_tag.*?%&gt;/</span>, <span class="ruby-value str">&quot;&lt;/form&gt;&quot;</span>)
+148:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">validable</span>
+149:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="#M000009" class="method-signature">
+          <span class="method-name">log_errors</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+log tidy output
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 105</span>
+105:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">log_errors</span>
+106:     <span class="ruby-comment cmt"># remove errors that are to be ignored</span>
+107:     <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">delete_if</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">error</span><span class="ruby-operator">|</span>
+108:       <span class="ruby-constant">IGNORED</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-keyword kw">false</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">b</span>,<span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">b</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">error</span>.<span class="ruby-identifier">message</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">r</span>) }
+109:     <span class="ruby-keyword kw">end</span>
+110: 
+111:     <span class="ruby-comment cmt"># display errors</span>
+112:     <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">empty?</span>
+113:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;ERRORS&quot;</span>
+114:       <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">log_file</span>, <span class="ruby-value str">&quot;w&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">log</span><span class="ruby-operator">|</span>
+115:         <span class="ruby-identifier">log</span>.<span class="ruby-identifier">puts</span> <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">errors</span>
+116:         <span class="ruby-identifier">log</span>.<span class="ruby-identifier">puts</span>
+117:         <span class="ruby-identifier">log</span>.<span class="ruby-identifier">puts</span> <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">diagnostics</span>
+118:       <span class="ruby-keyword kw">end</span>
+119:     <span class="ruby-keyword kw">else</span>
+120:       <span class="ruby-constant">File</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">log_file</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">log_file</span>)
+121:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;OK&quot;</span>
+122:     <span class="ruby-keyword kw">end</span>
+123:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="#M000007" class="method-signature">
+          <span class="method-name">validate</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+validate all templates in path
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000007-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 67</span>
+67:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate</span>
+68:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-ivar">@@path</span>)
+69:       <span class="ruby-constant">Find</span>.<span class="ruby-identifier">find</span>(<span class="ruby-ivar">@@path</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+70:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">match</span>(<span class="ruby-constant">MASK</span>) 
+71:           <span class="ruby-ivar">@file</span> = <span class="ruby-identifier">file</span>
+72:           <span class="ruby-identifier">validate_file</span>
+73:         <span class="ruby-keyword kw">end</span>
+74:       <span class="ruby-keyword kw">end</span>
+75:     <span class="ruby-keyword kw">else</span>
+76:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-ivar">@@path</span>)
+77:         <span class="ruby-ivar">@file</span> = <span class="ruby-ivar">@@path</span>
+78:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-node">&quot;#{@@path}.rhtml&quot;</span>)
+79:         <span class="ruby-ivar">@file</span> = <span class="ruby-node">&quot;#{@@path}.rhtml&quot;</span>
+80:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">RAILS_ROOT</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;views&quot;</span>, <span class="ruby-ivar">@@path</span>))
+81:         <span class="ruby-ivar">@file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">RAILS_ROOT</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;views&quot;</span>, <span class="ruby-ivar">@@path</span>)
+82:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">RAILS_ROOT</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;views&quot;</span>, <span class="ruby-ivar">@@path</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.rhtml&quot;</span>)
+83:         <span class="ruby-ivar">@file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">RAILS_ROOT</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;views&quot;</span>, <span class="ruby-ivar">@@path</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.rhtml&quot;</span>
+84:       <span class="ruby-keyword kw">end</span>
+85:       <span class="ruby-identifier">validate_file</span>
+86:       <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">errors</span>
+87:       <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">diagnostics</span>
+88:     <span class="ruby-keyword kw">end</span>
+89:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="#M000008" class="method-signature">
+          <span class="method-name">validate_file</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+validate a single file
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 92</span>
+ 92:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_file</span>
+ 93:     <span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;%-70s&quot;</span>, <span class="ruby-ivar">@file</span>
+ 94:     
+ 95:     <span class="ruby-identifier">content</span> = <span class="ruby-identifier">format_content</span>(<span class="ruby-constant">IO</span>.<span class="ruby-identifier">read</span>(<span class="ruby-ivar">@file</span>))
+ 96: 
+ 97:     <span class="ruby-comment cmt"># validate</span>
+ 98:     <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">clean</span>(<span class="ruby-identifier">content</span>)
+ 99: 
+100:     <span class="ruby-comment cmt"># and log erros</span>
+101:     <span class="ruby-identifier">log_errors</span> 
+102:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
