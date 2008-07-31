@@ -81,7 +81,8 @@
     <div id="description">
       <h1><a href="RailsTidy.html">RailsTidy</a></h1>
 <p>
-class use to validate html in templates and in http response
+class use to <a href="RailsTidy.html#M000007">validate</a> html in
+templates and in http response
 </p>
 
     </div>
@@ -129,7 +130,7 @@ class use to validate html in templates and in http response
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">MASK</td>
           <td>=</td>
-          <td class="context-item-value">/\.rhtml$/</td>
+          <td class="context-item-value">/\.(rhtml|html\.erb)$/</td>
         </tr>
         </table>
       </div>
@@ -155,7 +156,7 @@ class use to validate html in templates and in http response
       
         <div class="method-description">
           <p>
-filter the body of a response
+<a href="RailsTidy.html#M000011">filter</a> the body of a response
 </p>
 <p>
 use this method in an after_filter. Example:
@@ -170,13 +171,13 @@ use this method in an after_filter. Example:
             onclick="toggleCode('M000011-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000011-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 160</span>
-160:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">filter</span>(<span class="ruby-identifier">response</span>)
-161:     <span class="ruby-identifier">tidy</span> = <span class="ruby-identifier">tidy_factory</span>
-162:     <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">clean</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)
-163:     <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">error</span><span class="ruby-operator">|</span> <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;Tidy: #{error}&quot;</span>) }
-164:     <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">release</span>
-165:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 164</span>
+164:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">filter</span>(<span class="ruby-identifier">response</span>)
+165:     <span class="ruby-identifier">tidy</span> = <span class="ruby-identifier">tidy_factory</span>
+166:     <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">clean</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)
+167:     <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">error</span><span class="ruby-operator">|</span> <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;Tidy: #{error}&quot;</span>) }
+168:     <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">release</span>
+169:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -216,11 +217,13 @@ use this method in an after_filter. Example:
       
         <div class="method-description">
           <p>
-path of the file or directory to validate
+path of the file or directory to <a
+href="RailsTidy.html#M000007">validate</a>
 </p>
 <p>
 if path is a file, it will be validated using tidy, if it is a directory,
-it will search it for .rhtml file and validate all those files.
+it will search it for .rhtml file and <a
+href="RailsTidy.html#M000007">validate</a> all those files.
 </p>
           <p><a class="source-toggle" href="#"
             onclick="toggleCode('M000001-source');return false;">[Source]</a></p>
@@ -246,7 +249,7 @@ it will search it for .rhtml file and validate all those files.
       
         <div class="method-description">
           <p>
-validate templates in path
+<a href="RailsTidy.html#M000007">validate</a> templates in path
 </p>
           <p><a class="source-toggle" href="#"
             onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
@@ -299,19 +302,19 @@ path to tidy configuration file, set to config/tidy.rc by default
       
         <div class="method-description">
           <p>
-return a new tidy instance
+return a <a href="RailsTidy.html#M000006">new</a> tidy instance
 </p>
           <p><a class="source-toggle" href="#"
             onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000012-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 168</span>
-168:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tidy_factory</span>
-169:     <span class="ruby-constant">Tidy</span>.<span class="ruby-identifier">path</span> = <span class="ruby-ivar">@@tidy_path</span>
-170:     <span class="ruby-identifier">tidy</span> = <span class="ruby-constant">Tidy</span>.<span class="ruby-identifier">new</span>
-171:     <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">load_config</span>(<span class="ruby-ivar">@@tidy_configuration</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-ivar">@@tidy_configuration</span>)
-172:     <span class="ruby-identifier">tidy</span>
-173:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 172</span>
+172:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tidy_factory</span>
+173:     <span class="ruby-constant">Tidy</span>.<span class="ruby-identifier">path</span> = <span class="ruby-ivar">@@tidy_path</span>
+174:     <span class="ruby-identifier">tidy</span> = <span class="ruby-constant">Tidy</span>.<span class="ruby-identifier">new</span>
+175:     <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">load_config</span>(<span class="ruby-ivar">@@tidy_configuration</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-ivar">@@tidy_configuration</span>)
+176:     <span class="ruby-identifier">tidy</span>
+177:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -389,28 +392,28 @@ doctypes or html tag, tidy does not complain
             onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000010-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 129</span>
-129:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">format_content</span>(<span class="ruby-identifier">content</span>)
-130:     <span class="ruby-comment cmt"># add doctype if not found</span>
-131:     <span class="ruby-identifier">validable</span> = <span class="ruby-value str">&quot;&quot;</span>
-132:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">content</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/&lt;!DOCTYPE/</span>)
-133:       <span class="ruby-identifier">validable</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;!DOCTYPE html PUBLIC \&quot;-//W3C//DTD XHTML 1.0 Transitional//EN\&quot; &quot;</span> <span class="ruby-operator">+</span>
-134:         <span class="ruby-value str">&quot; \&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\&quot;&gt;&quot;</span>
-135:     <span class="ruby-keyword kw">end</span>
-136: 
-137:     <span class="ruby-comment cmt"># add html, head, title and body </span>
-138:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">content</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/&lt;html/</span>)
-139:       <span class="ruby-identifier">validable</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;rake test_templates&lt;/title&gt;&lt;/head&gt;&lt;body&gt;#{content}&lt;/body&gt;&lt;/html&gt;&quot;</span>
-140:     <span class="ruby-keyword kw">else</span>
-141:       <span class="ruby-identifier">validable</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">content</span>
-142:     <span class="ruby-keyword kw">end</span>
-143: 
-144:     <span class="ruby-comment cmt"># replace start_form_tag and end_form_tag with &lt;form&gt; and &lt;/form&gt;</span>
-145:     <span class="ruby-identifier">validable</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/&lt;%=\s*start_form_tag.*?%&gt;/</span>, <span class="ruby-value str">&quot;&lt;form action=\&quot;test\&quot;&gt;&quot;</span>)
-146:     <span class="ruby-identifier">validable</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/&lt;%=\s*form_remote_tag.*?%&gt;/</span>, <span class="ruby-value str">&quot;&lt;form action=\&quot;test\&quot;&gt;&quot;</span>)
-147:     <span class="ruby-identifier">validable</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/&lt;%=\s*end_form_tag.*?%&gt;/</span>, <span class="ruby-value str">&quot;&lt;/form&gt;&quot;</span>)
-148:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">validable</span>
-149:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 133</span>
+133:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">format_content</span>(<span class="ruby-identifier">content</span>)
+134:     <span class="ruby-comment cmt"># add doctype if not found</span>
+135:     <span class="ruby-identifier">validable</span> = <span class="ruby-value str">&quot;&quot;</span>
+136:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">content</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/&lt;!DOCTYPE/</span>)
+137:       <span class="ruby-identifier">validable</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;!DOCTYPE html PUBLIC \&quot;-//W3C//DTD XHTML 1.0 Transitional//EN\&quot; &quot;</span> <span class="ruby-operator">+</span>
+138:         <span class="ruby-value str">&quot; \&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\&quot;&gt;&quot;</span>
+139:     <span class="ruby-keyword kw">end</span>
+140: 
+141:     <span class="ruby-comment cmt"># add html, head, title and body </span>
+142:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">content</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/&lt;html/</span>)
+143:       <span class="ruby-identifier">validable</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;rake test_templates&lt;/title&gt;&lt;/head&gt;&lt;body&gt;#{content}&lt;/body&gt;&lt;/html&gt;&quot;</span>
+144:     <span class="ruby-keyword kw">else</span>
+145:       <span class="ruby-identifier">validable</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">content</span>
+146:     <span class="ruby-keyword kw">end</span>
+147: 
+148:     <span class="ruby-comment cmt"># replace start_form_tag and end_form_tag with &lt;form&gt; and &lt;/form&gt;</span>
+149:     <span class="ruby-identifier">validable</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/&lt;%=\s*start_form_tag.*?%&gt;/</span>, <span class="ruby-value str">&quot;&lt;form action=\&quot;test\&quot;&gt;&quot;</span>)
+150:     <span class="ruby-identifier">validable</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/&lt;%=\s*form_remote_tag.*?%&gt;/</span>, <span class="ruby-value str">&quot;&lt;form action=\&quot;test\&quot;&gt;&quot;</span>)
+151:     <span class="ruby-identifier">validable</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/&lt;%=\s*end_form_tag.*?%&gt;/</span>, <span class="ruby-value str">&quot;&lt;/form&gt;&quot;</span>)
+152:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">validable</span>
+153:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -433,26 +436,26 @@ log tidy output
             onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000009-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 105</span>
-105:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">log_errors</span>
-106:     <span class="ruby-comment cmt"># remove errors that are to be ignored</span>
-107:     <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">delete_if</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">error</span><span class="ruby-operator">|</span>
-108:       <span class="ruby-constant">IGNORED</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-keyword kw">false</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">b</span>,<span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">b</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">error</span>.<span class="ruby-identifier">message</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">r</span>) }
-109:     <span class="ruby-keyword kw">end</span>
-110: 
-111:     <span class="ruby-comment cmt"># display errors</span>
-112:     <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">empty?</span>
-113:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;ERRORS&quot;</span>
-114:       <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">log_file</span>, <span class="ruby-value str">&quot;w&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">log</span><span class="ruby-operator">|</span>
-115:         <span class="ruby-identifier">log</span>.<span class="ruby-identifier">puts</span> <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">errors</span>
-116:         <span class="ruby-identifier">log</span>.<span class="ruby-identifier">puts</span>
-117:         <span class="ruby-identifier">log</span>.<span class="ruby-identifier">puts</span> <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">diagnostics</span>
-118:       <span class="ruby-keyword kw">end</span>
-119:     <span class="ruby-keyword kw">else</span>
-120:       <span class="ruby-constant">File</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">log_file</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">log_file</span>)
-121:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;OK&quot;</span>
-122:     <span class="ruby-keyword kw">end</span>
-123:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 109</span>
+109:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">log_errors</span>
+110:     <span class="ruby-comment cmt"># remove errors that are to be ignored</span>
+111:     <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">delete_if</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">error</span><span class="ruby-operator">|</span>
+112:       <span class="ruby-constant">IGNORED</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-keyword kw">false</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">b</span>,<span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">b</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">error</span>.<span class="ruby-identifier">message</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">r</span>) }
+113:     <span class="ruby-keyword kw">end</span>
+114: 
+115:     <span class="ruby-comment cmt"># display errors</span>
+116:     <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">empty?</span>
+117:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;ERRORS&quot;</span>
+118:       <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">log_file</span>, <span class="ruby-value str">&quot;w&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">log</span><span class="ruby-operator">|</span>
+119:         <span class="ruby-identifier">log</span>.<span class="ruby-identifier">puts</span> <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">errors</span>
+120:         <span class="ruby-identifier">log</span>.<span class="ruby-identifier">puts</span>
+121:         <span class="ruby-identifier">log</span>.<span class="ruby-identifier">puts</span> <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">diagnostics</span>
+122:       <span class="ruby-keyword kw">end</span>
+123:     <span class="ruby-keyword kw">else</span>
+124:       <span class="ruby-constant">File</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">log_file</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">log_file</span>)
+125:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;OK&quot;</span>
+126:     <span class="ruby-keyword kw">end</span>
+127:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -469,7 +472,7 @@ log tidy output
       
         <div class="method-description">
           <p>
-validate all templates in path
+<a href="RailsTidy.html#M000007">validate</a> all templates in path
 </p>
           <p><a class="source-toggle" href="#"
             onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
@@ -489,16 +492,20 @@ validate all templates in path
 77:         <span class="ruby-ivar">@file</span> = <span class="ruby-ivar">@@path</span>
 78:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-node">&quot;#{@@path}.rhtml&quot;</span>)
 79:         <span class="ruby-ivar">@file</span> = <span class="ruby-node">&quot;#{@@path}.rhtml&quot;</span>
-80:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">RAILS_ROOT</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;views&quot;</span>, <span class="ruby-ivar">@@path</span>))
-81:         <span class="ruby-ivar">@file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">RAILS_ROOT</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;views&quot;</span>, <span class="ruby-ivar">@@path</span>)
-82:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">RAILS_ROOT</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;views&quot;</span>, <span class="ruby-ivar">@@path</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.rhtml&quot;</span>)
-83:         <span class="ruby-ivar">@file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">RAILS_ROOT</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;views&quot;</span>, <span class="ruby-ivar">@@path</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.rhtml&quot;</span>
-84:       <span class="ruby-keyword kw">end</span>
-85:       <span class="ruby-identifier">validate_file</span>
-86:       <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">errors</span>
-87:       <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">diagnostics</span>
-88:     <span class="ruby-keyword kw">end</span>
-89:   <span class="ruby-keyword kw">end</span>
+80:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-node">&quot;#{@@path}.html.erb&quot;</span>)
+81:         <span class="ruby-ivar">@file</span> = <span class="ruby-node">&quot;#{@@path}.html.erb&quot;</span>
+82:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">RAILS_ROOT</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;views&quot;</span>, <span class="ruby-ivar">@@path</span>))
+83:         <span class="ruby-ivar">@file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">RAILS_ROOT</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;views&quot;</span>, <span class="ruby-ivar">@@path</span>)
+84:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">RAILS_ROOT</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;views&quot;</span>, <span class="ruby-ivar">@@path</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.rhtml&quot;</span>)
+85:         <span class="ruby-ivar">@file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">RAILS_ROOT</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;views&quot;</span>, <span class="ruby-ivar">@@path</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.rhtml&quot;</span>
+86:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">RAILS_ROOT</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;views&quot;</span>, <span class="ruby-ivar">@@path</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.html.erb&quot;</span>)
+87:         <span class="ruby-ivar">@file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">RAILS_ROOT</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;views&quot;</span>, <span class="ruby-ivar">@@path</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.html.erb&quot;</span>
+88:       <span class="ruby-keyword kw">end</span>
+89:       <span class="ruby-identifier">validate_file</span>
+90:       <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">errors</span>
+91:       <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">diagnostics</span>
+92:     <span class="ruby-keyword kw">end</span>
+93:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -515,24 +522,24 @@ validate all templates in path
       
         <div class="method-description">
           <p>
-validate a single file
+<a href="RailsTidy.html#M000007">validate</a> a single file
 </p>
           <p><a class="source-toggle" href="#"
             onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000008-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 92</span>
- 92:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_file</span>
- 93:     <span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;%-70s&quot;</span>, <span class="ruby-ivar">@file</span>
- 94:     
- 95:     <span class="ruby-identifier">content</span> = <span class="ruby-identifier">format_content</span>(<span class="ruby-constant">IO</span>.<span class="ruby-identifier">read</span>(<span class="ruby-ivar">@file</span>))
- 96: 
- 97:     <span class="ruby-comment cmt"># validate</span>
- 98:     <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">clean</span>(<span class="ruby-identifier">content</span>)
- 99: 
-100:     <span class="ruby-comment cmt"># and log erros</span>
-101:     <span class="ruby-identifier">log_errors</span> 
-102:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 96</span>
+ 96:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_file</span>
+ 97:     <span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;%-70s&quot;</span>, <span class="ruby-ivar">@file</span>
+ 98:     
+ 99:     <span class="ruby-identifier">content</span> = <span class="ruby-identifier">format_content</span>(<span class="ruby-constant">IO</span>.<span class="ruby-identifier">read</span>(<span class="ruby-ivar">@file</span>))
+100: 
+101:     <span class="ruby-comment cmt"># validate</span>
+102:     <span class="ruby-ivar">@tidy</span>.<span class="ruby-identifier">clean</span>(<span class="ruby-identifier">content</span>)
+103: 
+104:     <span class="ruby-comment cmt"># and log erros</span>
+105:     <span class="ruby-identifier">log_errors</span> 
+106:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

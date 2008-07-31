@@ -116,31 +116,31 @@
             onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000013-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 185</span>
-185:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assert_tidy</span>
-186:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@response</span>.<span class="ruby-identifier">success?</span>
-187:           <span class="ruby-identifier">tidy</span> = <span class="ruby-constant">RailsTidy</span>.<span class="ruby-identifier">tidy_factory</span>
-188:           <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">clean</span>(<span class="ruby-ivar">@response</span>.<span class="ruby-identifier">body</span>)
-189:           <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">error</span><span class="ruby-operator">|</span>
-190:             <span class="ruby-constant">RAILS_DEFAULT_LOGGER</span>.<span class="ruby-identifier">error</span>(<span class="ruby-identifier">error</span>)
-191:           <span class="ruby-keyword kw">end</span>
-192:           <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">diagnostics</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">info</span><span class="ruby-operator">|</span>
-193:             <span class="ruby-constant">RAILS_DEFAULT_LOGGER</span>.<span class="ruby-identifier">info</span>(<span class="ruby-identifier">info</span>)
-194:           <span class="ruby-keyword kw">end</span>
-195:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">size</span>.<span class="ruby-identifier">zero?</span>
-196:             <span class="ruby-identifier">message</span> = (<span class="ruby-value str">&quot;-&quot;</span> <span class="ruby-operator">*</span> <span class="ruby-value">40</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">$/</span>
-197:             <span class="ruby-identifier">i</span> = <span class="ruby-value">1</span>
-198:             <span class="ruby-ivar">@response</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
-199:               <span class="ruby-identifier">message</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">&quot;%4u %s&quot;</span>, <span class="ruby-identifier">i</span>, <span class="ruby-identifier">line</span>)
-200:               <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
-201:             <span class="ruby-keyword kw">end</span>
-202:             <span class="ruby-identifier">message</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-value str">&quot;-&quot;</span> <span class="ruby-operator">*</span> <span class="ruby-value">40</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">$/</span>
-203:             <span class="ruby-identifier">message</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">$/</span>)
-204:           <span class="ruby-keyword kw">end</span>
-205:           <span class="ruby-identifier">assert</span> <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">size</span>.<span class="ruby-identifier">zero?</span>, <span class="ruby-node">&quot;Tidy detected html errors in response body: #{$/} #{message}&quot;</span>
-206:           <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">release</span>
-207:         <span class="ruby-keyword kw">end</span>
-208:       <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/rails_tidy.rb, line 189</span>
+189:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assert_tidy</span>
+190:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@response</span>.<span class="ruby-identifier">success?</span>
+191:           <span class="ruby-identifier">tidy</span> = <span class="ruby-constant">RailsTidy</span>.<span class="ruby-identifier">tidy_factory</span>
+192:           <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">clean</span>(<span class="ruby-ivar">@response</span>.<span class="ruby-identifier">body</span>)
+193:           <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">error</span><span class="ruby-operator">|</span>
+194:             <span class="ruby-constant">RAILS_DEFAULT_LOGGER</span>.<span class="ruby-identifier">error</span>(<span class="ruby-identifier">error</span>)
+195:           <span class="ruby-keyword kw">end</span>
+196:           <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">diagnostics</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">info</span><span class="ruby-operator">|</span>
+197:             <span class="ruby-constant">RAILS_DEFAULT_LOGGER</span>.<span class="ruby-identifier">info</span>(<span class="ruby-identifier">info</span>)
+198:           <span class="ruby-keyword kw">end</span>
+199:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">size</span>.<span class="ruby-identifier">zero?</span>
+200:             <span class="ruby-identifier">message</span> = (<span class="ruby-value str">&quot;-&quot;</span> <span class="ruby-operator">*</span> <span class="ruby-value">40</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">$/</span>
+201:             <span class="ruby-identifier">i</span> = <span class="ruby-value">1</span>
+202:             <span class="ruby-ivar">@response</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+203:               <span class="ruby-identifier">message</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">&quot;%4u %s&quot;</span>, <span class="ruby-identifier">i</span>, <span class="ruby-identifier">line</span>)
+204:               <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+205:             <span class="ruby-keyword kw">end</span>
+206:             <span class="ruby-identifier">message</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-value str">&quot;-&quot;</span> <span class="ruby-operator">*</span> <span class="ruby-value">40</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">$/</span>
+207:             <span class="ruby-identifier">message</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">$/</span>)
+208:           <span class="ruby-keyword kw">end</span>
+209:           <span class="ruby-identifier">assert</span> <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">size</span>.<span class="ruby-identifier">zero?</span>, <span class="ruby-node">&quot;Tidy detected html errors in response body: #{$/} #{message}&quot;</span>
+210:           <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">release</span>
+211:         <span class="ruby-keyword kw">end</span>
+212:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

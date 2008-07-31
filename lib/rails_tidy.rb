@@ -14,7 +14,7 @@ class RailsTidy
     /<div> anchor "<%=.*?%>" already defined/
   ]
   
-  MASK = /\.rhtml$/
+  MASK = /\.(rhtml|html\.erb)$/
 
   @@path = File.join(RAILS_ROOT, "app", "views")
   os = Config::CONFIG["arch"]
@@ -77,10 +77,14 @@ class RailsTidy
         @file = @@path
       elsif File.file?("#{@@path}.rhtml")
         @file = "#{@@path}.rhtml"
+      elsif File.file?("#{@@path}.html.erb")
+        @file = "#{@@path}.html.erb"
       elsif File.file?(File.join(RAILS_ROOT, "app", "views", @@path))
         @file = File.join(RAILS_ROOT, "app", "views", @@path)
       elsif File.file?(File.join(RAILS_ROOT, "app", "views", @@path) + ".rhtml")
         @file = File.join(RAILS_ROOT, "app", "views", @@path) + ".rhtml"
+      elsif File.file?(File.join(RAILS_ROOT, "app", "views", @@path) + ".html.erb")
+        @file = File.join(RAILS_ROOT, "app", "views", @@path) + ".html.erb"
       end
       validate_file
       puts @tidy.errors

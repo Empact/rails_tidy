@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Thu Feb 16 12:59:01 CET 2006</td>
+      <td>Thu Apr 27 15:51:17 +0200 2006</td>
     </tr>
     </table>
   </div>
@@ -107,9 +107,11 @@ You maybe need to su as root for the patch to apply.
 <h2>2. Installation</h2>
 <p>
 Unpack into the <tt>vendor/plugin</tt> and that should be it. Ruby bindings
-for libtidy need to know the path to the file <tt>libtidy.so</tt>. It is
-assumed to be found at <tt>/usr/lib/libtidy.so</tt> . If this is not the
-case, add
+for libtidy need to know the path to the file dynamic library file for
+tidy. It is assumed to be found at <tt>/usr/lib/libtidy.so</tt> for Linux,
+<tt>/usr/lib/libtidy.dylib</tt> for Darwin and
+<tt>/usr/bin/cygtidy-0-99-0.dll</tt> for cygwin. If this is not the case
+add
 </p>
 <pre>
   RailsTidy.tidy_path = &quot;/path/to/your/libtidy.so&quot;
@@ -137,7 +139,7 @@ for tidy available configuration options.
 Simply use
 </p>
 <pre>
-  $ rake test_templates
+  $ rake test:templates
 </pre>
 <p>
 By default, the plugin will parse all <tt>*.rhtml</tt> files in your
@@ -149,7 +151,7 @@ file.
 If you want to validate only one file, use
 </p>
 <pre>
-  $ rake test_templates FILE=&quot;path/to/the/file&quot;
+  $ rake test:templates FILE=&quot;path/to/the/file&quot;
 </pre>
 <p>
 If $FILE is a directory, it will search for all <tt>*.rhtml</tt> file in it
@@ -197,8 +199,8 @@ use an after filter in your <tt>app/controller/application.rb</tt> file
 To configure tidy output, see &quot;3. Configuration&quot;
 </p>
 <p>
-<em>WARNING</em>: THIS IS CERTAINLY A RESOURCE HOG. I&#8217;m not
-interrested in this feature so I didn&#8217;t benchmarked it but at first
+<em>WARNING</em>: THIS IS CERTAINLY A RESOURCE HOG. I&#8216;m not
+interrested in this feature so I didn&#8216;t benchmarked it but at first
 sight rendering is at least 2 times slower with the filter enabled.
 </p>
 <h2>5. License</h2>
@@ -210,7 +212,7 @@ included in the <a href="MIT-LICENSE.html">MIT-LICENSE</a> file.
 <p>
 This plugin was created by Damien Merenne &lt;dam@cosinux.org&gt; and is
 located at <a
-href="http://www.cosinux.org/blogs/dam/pages/rails-tidy">www.cosinux.org/blogs/dam/pages/rails-tidy</a>.
+href="http://blog.cosinux.org/pages/rails-tidy">blog.cosinux.org/pages/rails-tidy</a>.
 </p>
 
     </div>

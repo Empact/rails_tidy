@@ -1,3 +1,15 @@
+*0.3* (April 24th, 2008)
+
+* support for Rails 2.0 templates extension by Danial Pearce
+
+*0.2* (March 18th, 2006)
+
+* support for default library path on cygwin and macosx by Todd Fisher
+* replace form_remote_tag function with a <form> tag to avoid
+  triggering tidy errors
+* don't load tidy when in production environment
+* use test namespace for rake task
+
 *0.1* (February 15th, 2006)
 
 * first plugin release

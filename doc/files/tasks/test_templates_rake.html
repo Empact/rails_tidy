@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Wed Feb 15 12:28:45 CET 2006</td>
+      <td>Tue Apr 18 11:36:32 +0200 2006</td>
     </tr>
     </table>
   </div>
@@ -71,15 +71,14 @@
     <div id="description">
       <p>
 require File.join(File.dirname(<em>FILE</em>),&quot;..&quot;,
-&quot;lib&quot;, &quot;rails_tidy&quot;)
-</p>
-<p>
-desc &quot;validate html in templates&quot; task :test_templates =&gt;
-:environment do
+&quot;lib&quot;, &quot;rails_tidy&quot;) namespace :test do
 </p>
 <pre>
-  RailsTidy.path = ENV[&quot;FILE&quot;] if ENV.key?(&quot;FILE&quot;)
-  RailsTidy.run
+  desc &quot;validate html in templates&quot;
+  task :templates =&gt; :environment do
+    RailsTidy.path = ENV[&quot;FILE&quot;] if ENV.key?(&quot;FILE&quot;)
+    RailsTidy.run
+  end
 </pre>
 <p>
 end
